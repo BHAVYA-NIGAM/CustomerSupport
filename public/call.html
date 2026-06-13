@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Call | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+  </head>
+  <body class="call-body">
+    <nav class="topbar glass">
+      <a class="brand" href="/agent.html">Customer Support</a>
+      <div class="call-top-actions">
+        <button id="meetingInfoBtn" class="ghost agent-only">
+          Meeting details
+        </button>
+        <div class="session-pill">Session <span id="sessionLabel"></span></div>
+      </div>
+    </nav>
+
+    <main class="call-layout">
+      <section class="video-stage">
+        <div class="video-card remote">
+          <video id="remoteVideo" autoplay playsinline></video>
+          <div
+            id="remoteAvatar"
+            class="video-avatar visible"
+            aria-label="Remote participant camera is off"
+          >
+            <span id="remoteInitials">?</span>
+          </div>
+          <audio id="remoteAudio" autoplay></audio>
+          <span class="video-label" id="videoLabel">Remote participant</span>
+        </div>
+        <div class="video-card local">
+          <video id="localVideo" autoplay muted playsinline></video>
+          <div
+            id="localAvatar"
+            class="video-avatar"
+            aria-label="Your camera is off"
+          >
+            <span id="localInitials">Y</span>
+          </div>
+          <span class="video-label" id="localVideoLabel">You</span>
+        </div>
+        <div class="meeting-controls">
+          <button id="muteBtn" class="meeting-control" title="Mute microphone">
+            <span>Mic</span><small>On</small>
+          </button>
+          <button
+            id="cameraBtn"
+            class="meeting-control"
+            title="Turn off camera"
+          >
+            <span>Camera</span><small>On</small>
+          </button>
+          <button
+            id="shareScreenBtn"
+            class="meeting-control"
+            title="Share screen"
+          >
+            <span>Share</span><small>Screen</small>
+          </button>
+          <button
+            id="startRecordingBtn"
+            class="meeting-control agent-only"
+            title="Start recording"
+          >
+            <span>Record</span><small>Start</small>
+          </button>
+          <button
+            id="stopRecordingBtn"
+            class="meeting-control agent-only"
+            title="Stop recording"
+          >
+            <span>Record</span><small>Stop</small>
+          </button>
+          <button
+            id="endCallBtn"
+            class="meeting-control hangup agent-only"
+            title="End call"
+          >
+            <span>End</span><small>Call</small>
+          </button>
+          <button
+            id="leaveCallBtn"
+            class="meeting-control hangup customer-only"
+            title="Leave call"
+          >
+            <span>Leave</span><small>Call</small>
+          </button>
+        </div>
+        <p id="callMessage" class="message"></p>
+      </section>
+
+      <aside class="chat-panel">
+        <h2>Session Chat</h2>
+        <div id="chatMessages" class="chat-messages"></div>
+        <form id="fileForm" class="file-form">
+          <input
+            id="fileInput"
+            type="file"
+            accept=".pdf,.png,.jpg,.jpeg,.docx"
+          />
+          <button class="secondary" type="submit">Share File</button>
+        </form>
+        <form id="chatForm" class="chat-form">
+          <input
+            id="chatInput"
+            placeholder="Type a message..."
+            autocomplete="off"
+          />
+          <button class="primary" type="submit">Send</button>
+        </form>
+        <div id="recordingBox" class="recording-box">Recording: idle</div>
+      </aside>
+    </main>
+
+    <dialog id="meetingInfoDialog" class="meeting-dialog">
+      <button id="closeMeetingInfoBtn" class="dialog-close">Close</button>
+      <p class="eyebrow meeting-details">Meeting details</p>
+      <h2>Invite your customer</h2>
+      <label>Meeting link <input id="meetingLink" readonly /></label>
+      <label>Token ID <input id="meetingToken" readonly /></label>
+      <!-- <button id="copyMeetingLinkBtn" class="primary">Copy meeting link</button> -->
+      <button id="copyInviteBtn" class="secondary">
+        Copy Invite Link
+        <span class="material-symbols-outlined copy"> content_copy </span>
+      </button>
+    </dialog>
+
+    <dialog id="recordingPlayerDialog" class="recording-player-dialog">
+      <button id="closeRecordingPlayerBtn" class="dialog-close">Close</button>
+      <p class="eyebrow">Session recording</p>
+      <h2>Playback</h2>
+      <video id="recordingPlayer" controls playsinline></video>
+      <a id="recordingDownloadLink" class="primary link-button" download
+        >Download MP4</a
+      >
+    </dialog>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/vendor/mediasoup-client.bundle.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/call.js"></script>
+  </body>
+</html>

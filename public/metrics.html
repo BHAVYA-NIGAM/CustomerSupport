@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Metrics | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <nav class="topbar">
+      <a class="brand" href="/agent.html">Customer Support</a>
+      <div class="nav-actions">
+        <a href="/admin.html">Admin</a>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
+    </nav>
+
+    <main class="dashboard-grid">
+      <section class="panel wide">
+        <h1>Operational Metrics</h1>
+        <div class="metric-grid">
+          <div class="metric">
+            <span id="activeSessions">0</span><small>Active Sessions</small>
+          </div>
+          <div class="metric">
+            <span id="connectedUsers">0</span><small>Connected Users</small>
+          </div>
+          <div class="metric">
+            <span id="totalCalls">0</span><small>Total Calls</small>
+          </div>
+          <div class="metric">
+            <span id="errorCount">0</span><small>Error Count</small>
+          </div>
+        </div>
+      </section>
+      <section class="panel wide">
+        <canvas id="metricsChart" height="120"></canvas>
+      </section>
+    </main>
+
+    <script src="/chart.js/dist/chart.umd.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/metrics.js"></script>
+  </body>
+</html>

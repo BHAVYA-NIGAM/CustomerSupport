@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Support | Login</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <main class="auth-shell wlcm">
+      <section class="wlcm hero-card">
+        <h1>Customer Support</h1>
+        <p class="lead">Real-time video support.</p>
+      </section>
+
+      <section class="panel wlcm auth-panel">
+        <div class="tabs">
+          <button class="tab active" data-mode="login">Login</button>
+          <button class="tab" data-mode="register">Register</button>
+        </div>
+
+        <form id="authForm">
+          <div id="signupFields" class="signup-fields" hidden>
+            <label
+              >Name <input id="name" name="name" placeholder="Your full name"
+            /></label>
+            <label
+              >Role
+              <select id="role" name="role">
+                <option value="agent">Agent</option>
+                <option value="admin">Admin</option>
+                <option value="customer">Customer</option>
+              </select>
+            </label>
+          </div>
+          <label
+            >Email
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="user@example.com"
+              required
+          /></label>
+          <label
+            >Password
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="password123"
+              required
+          /></label>
+          <button id="authSubmitBtn" class="primary" type="submit">
+            Login
+          </button>
+        </form>
+
+        <p id="authMessage" class="message"></p>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+  </body>
+</html>

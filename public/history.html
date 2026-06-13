@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Session History | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="history-theme">
+    <nav class="topbar history-topbar">
+      <a class="brand" href="/agent.html">Customer Support History</a>
+      <div class="nav-actions">
+        <a href="/" id="profile">Profile</a>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
+    </nav>
+
+    <main class="history-layout">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Queryable session record</p>
+            <h1>All Sessions</h1>
+            <p class="hint">
+              Click “View Events” to inspect joins, reconnects, and leaves.
+            </p>
+          </div>
+          <input
+            id="historySearch"
+            class="history-search"
+            placeholder="Search session or customer"
+          />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Agent</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Started</th>
+                <th>Duration</th>
+                <th>Recording</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="fullHistoryRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/history.js"></script>
+  </body>
+</html>

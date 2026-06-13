@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body class="admin-theme">
+    <nav class="topbar admin-topbar">
+      <a class="brand" href="/admin.html">Customer Support Ops</a>
+      <div class="nav-actions">
+        <a href="/admin.html">Admin</a>
+        <a href="/history.html">All History</a>
+        <a href="/metrics.html">Metrics</a>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
+    </nav>
+
+    <main class="dashboard-grid">
+      <section class="panel wide">
+        <p class="eyebrow">Operations control room</p>
+        <h1>Live Sessions</h1>
+        <div id="liveSessions" class="cards-list"></div>
+      </section>
+      <section class="panel wide">
+        <div class="section-heading">
+          <h1>Session History</h1>
+          <a class="secondary link-button-subtle" href="/history.html"
+            >Show More</a
+          >
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Agent</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Duration</th>
+                <th>Recording</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminHistoryRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

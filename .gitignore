@@ -1,0 +1,8 @@
+node_modules/
+.env
+npm-debug.log*
+public/uploads/*
+public/recordings/*
+!public/uploads/.gitkeep
+!public/recordings/.gitkeep
+.DS_Store

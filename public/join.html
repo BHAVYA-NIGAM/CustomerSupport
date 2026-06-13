@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Support Session | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <main class="auth-shell join">
+      <section class="join hero-card compact">
+        <p class="eyebrow">Customer invite</p>
+        <h1>Join your support call</h1>
+        <p class="lead" id="inviteSummary">Checking invite...</p>
+      </section>
+
+      <section class="panel join auth-panel">
+        <form id="joinForm">
+          <label
+            >Your name
+            <input id="customerName" required placeholder="Jane Customer"
+          /></label>
+          <label
+            >Invite link or token
+            <input
+              id="inviteToken"
+              required
+              placeholder="Paste full invite link or token"
+          /></label>
+          <button class="primary" type="submit">Join Call</button>
+        </form>
+        <p id="joinMessage" class="message"></p>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/join.js"></script>
+  </body>
+</html>

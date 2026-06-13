@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Dashboard | Customer Support</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+  </head>
+  <body class="agent-theme">
+    <nav class="topbar agent-topbar">
+      <a class="brand" href="/agent.html">Customer Support</a>
+      <div class="nav-actions">
+        <a href="/session.html">Sessions</a>
+        <a href="/history.html">All History</a>
+        <a href="/metrics.html">Metrics</a>
+        <button id="logoutBtn" class="ghost">Logout</button>
+      </div>
+    </nav>
+
+    <main class="dashboard-grid">
+      <section class="panel intro-panel">
+        <p class="eyebrow">Admin workspace</p>
+        <p>
+          Assist customers through live video, chat, screen sharing, and call
+          recordings from a single workspace.
+        </p>
+        <button id="createSessionBtn" class="primary">Create Session</button>
+      </section>
+
+      <section class="panel">
+        <h2>Current Invite</h2>
+        <div id="inviteBox" class="invite-box empty">
+          No session created yet.
+        </div>
+        <button id="copyInviteBtn" class="secondary">
+          Copy Invite Link
+          <span class="material-symbols-outlined copy"> content_copy </span>
+        </button>
+        <p id="agentMessage" class="message"></p>
+      </section>
+
+      <section class="panel wide">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Recent activity</p>
+            <h2>Session History</h2>
+          </div>
+          <a class="secondary link-button-subtle" href="/history.html"
+            >Show More</a
+          >
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Status</th>
+                <th>Customer</th>
+                <th>Started</th>
+                <th>Duration</th>
+                <th>Recording</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/agent.js"></script>
+  </body>
+</html>
