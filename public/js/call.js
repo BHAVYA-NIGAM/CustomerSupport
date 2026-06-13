@@ -83,8 +83,8 @@ async function getLocalMedia() {
   videoEnabled = hasVideo;
   audioEnabled = hasAudio;
   localAvatar.classList.toggle('visible', !hasVideo);
-  updateControl('cameraBtn', hasVideo, 'Camera');
-  updateControl('muteBtn', hasAudio, 'Mic');
+  updateControl('cameraBtn', hasVideo);
+  updateControl('muteBtn', hasAudio);
 
   if (hasVideo) await localVideo.play().catch(() => {});
   if (!hasVideo && !hasAudio) {
@@ -381,7 +381,7 @@ document.getElementById('muteBtn').addEventListener('click', async () => {
     kind: 'audio',
     enabled: audioEnabled,
   });
-  updateControl('muteBtn', audioEnabled, 'Mic');
+  updateControl('muteBtn', audioEnabled);
 });
 
 document.getElementById('cameraBtn').addEventListener('click', async () => {
@@ -401,7 +401,7 @@ document.getElementById('cameraBtn').addEventListener('click', async () => {
     kind: 'video',
     enabled: videoEnabled,
   });
-  updateControl('cameraBtn', videoEnabled, 'Camera');
+  updateControl('cameraBtn', videoEnabled);
 });
 
 document
@@ -497,29 +497,33 @@ document
   .getElementById('startRecordingBtn')
   ?.addEventListener('click', async () => {
     try {
-      const data = await API.request('/api/recording/start', {
-        method: 'POST',
-        body: JSON.stringify({ sessionId }),
-      });
-      renderRecording(data.recording.status, data.recording);
+      if (
+        document
+          .getElementById('startRecordingBtn')
+          .querySelector('.material-symbols-outlined').textContent ===
+        'stop_circle'
+      ) {
+        const data = await API.request('/api/recording/stop', {
+          method: 'POST',
+          body: JSON.stringify({ sessionId }),
+        });
+
+        renderRecording(data.recording.status, data.recording);
+        updateRecordingButton(false);
+      } else {
+        const data = await API.request('/api/recording/start', {
+          method: 'POST',
+          body: JSON.stringify({ sessionId }),
+        });
+
+        renderRecording(data.recording.status, data.recording);
+        updateRecordingButton(true);
+      }
     } catch (error) {
       callMessage.textContent = error.message;
     }
   });
 
-document
-  .getElementById('stopRecordingBtn')
-  ?.addEventListener('click', async () => {
-    try {
-      const data = await API.request('/api/recording/stop', {
-        method: 'POST',
-        body: JSON.stringify({ sessionId }),
-      });
-      renderRecording(data.recording.status, data.recording);
-    } catch (error) {
-      callMessage.textContent = error.message;
-    }
-  });
 
 document.getElementById('endCallBtn')?.addEventListener('click', async () => {
   try {
@@ -584,25 +588,62 @@ function initials(name) {
   );
 }
 
-function updateControl(id, enabled, label) {
+function updateControl(id, enabled) {
   const button = document.getElementById(id);
+
   button.classList.toggle('off', !enabled);
-  button.querySelector('span').textContent = label;
-  button.querySelector('small').textContent = enabled ? 'On' : 'Off';
+
+  const icon = button.querySelector('.material-symbols-outlined');
+  const label = button.querySelector('small');
+
+  if (id === 'muteBtn') {
+    icon.textContent = enabled ? 'mic' : 'mic_off';
+    label.textContent = enabled ? 'Mic On' : 'Mic Off';
+  }
+
+  if (id === 'cameraBtn') {
+    icon.textContent = enabled ? 'videocam' : 'videocam_off';
+    label.textContent = enabled ? 'Camera On' : 'Camera Off';
+  }
 }
 
 function updateScreenShareControl(active) {
   const button = document.getElementById('shareScreenBtn');
+  const icon = button.querySelector('.material-symbols-outlined');
+  const label = button.querySelector('small');
+
   button.classList.toggle('sharing', active);
-  button.querySelector('span').textContent = active ? 'Sharing' : 'Share';
-  button.querySelector('small').textContent = active ? 'Stop' : 'Screen';
+
+  icon.textContent = active ? 'stop_screen_share' : 'present_to_all';
+
+  label.textContent = active ? 'Stop Share' : 'Share Screen';
 }
 
 function renderRecording(status, recording) {
+  updateRecordingButton(status === 'Recording');
+
   const label = status === 'Recording' ? 'In progress' : status;
-  recordingBox.innerHTML = `Recording: <strong>${label}</strong>${status === 'Ready' && recording?.recordingPath ? ` · <button class="recording-play-button" data-recording-path="${recording.recordingPath}">Play</button> · <a href="${recording.recordingPath}" download>Download MP4</a>` : ''}`;
+
+  recordingBox.innerHTML = `
+    Recording: <strong>${label}</strong>
+    ${
+      status === 'Ready' && recording?.recordingPath
+        ? `
+          · <button
+              class="recording-play-button"
+              data-recording-path="${recording.recordingPath}">
+              Play
+            </button>
+          · <a href="${recording.recordingPath}" download>
+              Download MP4
+            </a>
+        `
+        : ''
+    }
+  `;
 
   clearTimeout(recordingPollTimer);
+
   if (status === 'Processing') {
     recordingPollTimer = setTimeout(refreshRecordingStatus, 2500);
   }
@@ -713,3 +754,37 @@ document.getElementById('copyInviteBtn').addEventListener('click', async () => {
     `;
   }, 2000);
 });
+
+// const icon = document.querySelector('#muteBtn .material-symbols-outlined');
+
+// if (audioEnabled) {
+//   icon.textContent = 'mic';
+// } else {
+//   icon.textContent = 'mic_off';
+// }
+
+// const icon = document.querySelector('#cameraBtn .material-symbols-outlined');
+
+// if (videoEnabled) {
+//   icon.textContent = 'videocam';
+// } else {
+//   icon.textContent = 'videocam_off';
+// }
+
+function updateRecordingButton(isRecording) {
+  const btn = document.getElementById('startRecordingBtn');
+  if (!btn) return;
+
+  const icon = btn.querySelector('.material-symbols-outlined');
+  const label = btn.querySelector('small');
+
+  if (isRecording) {
+    icon.textContent = 'stop_circle';
+    label.textContent = 'Stop Recording';
+    btn.title = 'Stop recording';
+  } else {
+    icon.textContent = 'radio_button_checked';
+    label.textContent = 'Start Recording';
+    btn.title = 'Start recording';
+  }
+}
